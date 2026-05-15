@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { dailyQuestion, flashcards, mathTopics, quizCategories, studyGuides, tutoringLinks } from './data/content';
 
 const brand = {
   name: 'Barrett Pharmacy Technician Certification Academy LLC',
@@ -6,246 +7,12 @@ const brand = {
 };
 
 const content = {
-  dailyQuestion: {
-    question: 'A prescription calls for 250 mg of a medication. The stock bottle contains 125 mg per tablet. How many tablets are needed per dose?',
-    options: ['1 tablet', '2 tablets', '3 tablets', '4 tablets'],
-    answer: '2 tablets',
-    tip: 'Divide the prescribed dose by stock strength: 250 ÷ 125 = 2.'
-  },
-  quizzes: [
-    {
-      category: 'Pharmacy Math',
-      questions: [
-        {
-          text: 'Convert 0.75 g to mg.',
-          choices: ['75 mg', '750 mg', '7,500 mg', '0.075 mg'],
-          correctAnswer: '750 mg',
-          explanation: '1 gram equals 1000 mg, so 0.75 × 1000 = 750 mg.',
-          studyTip: 'Memorize common conversions (kg-g-mg-mcg) for quick dosage calculations.'
-        },
-        {
-          text: 'If a prescription is 1 tablet BID for 30 tablets, what is the days supply?',
-          choices: ['10 days', '15 days', '20 days', '30 days'],
-          correctAnswer: '15 days',
-          explanation: 'BID means 2 tablets per day. 30 tablets ÷ 2/day = 15 days.'
-        }
-      ]
-    },
-    {
-      category: 'Top 200 Drugs',
-      questions: [
-        {
-          text: 'What is the primary use of lisinopril?',
-          choices: ['Pain relief', 'Hypertension', 'Bacterial infection', 'GERD'],
-          correctAnswer: 'Hypertension',
-          explanation: 'Lisinopril is an ACE inhibitor commonly used to treat hypertension and heart failure.',
-          studyTip: 'Group drugs by suffixes like -pril (ACE inhibitors).'
-        },
-        {
-          text: 'Atorvastatin belongs to which drug class?',
-          choices: ['Beta blocker', 'Statin', 'PPI', 'Sulfonylurea'],
-          correctAnswer: 'Statin',
-          explanation: 'Atorvastatin is an HMG-CoA reductase inhibitor, known as a statin.'
-        }
-      ]
-    },
-    {
-      category: 'Pharmacy Law',
-      questions: [
-        {
-          text: 'Which schedule drug has the highest abuse potential?',
-          choices: ['Schedule II', 'Schedule III', 'Schedule IV', 'Schedule V'],
-          correctAnswer: 'Schedule II',
-          explanation: 'Among schedules II-V, Schedule II substances have the highest abuse potential.'
-        }
-      ]
-    },
-    {
-      category: 'Federal Requirements',
-      questions: [
-        {
-          text: 'What does HIPAA primarily protect?',
-          choices: ['Inventory audits', 'Patient health information', 'Drug pricing', 'Insurance formularies'],
-          correctAnswer: 'Patient health information',
-          explanation: 'HIPAA establishes standards to protect sensitive patient health information.'
-        }
-      ]
-    },
-    {
-      category: 'Medication Safety',
-      questions: [
-        {
-          text: 'What is a high-alert medication?',
-          choices: ['A medication on backorder', 'A medication with increased risk of causing significant harm if used in error', 'Any OTC product', 'Any refrigerated product'],
-          correctAnswer: 'A medication with increased risk of causing significant harm if used in error',
-          explanation: 'High-alert medications require extra safeguards due to their risk profile.'
-        }
-      ]
-    },
-    {
-      category: 'Sterile Compounding',
-      questions: [
-        {
-          text: 'Which USP chapter is commonly associated with sterile compounding standards?',
-          choices: ['USP <795>', 'USP <797>', 'USP <800>', 'USP <71>'],
-          correctAnswer: 'USP <797>',
-          explanation: 'USP <797> covers sterile compounding practices.',
-          studyTip: 'Remember: <795> nonsterile, <797> sterile, <800> hazardous drugs handling.'
-        }
-      ]
-    },
-    {
-      category: 'Billing and Insurance',
-      questions: [
-        {
-          text: 'What is a prior authorization?',
-          choices: ['A pharmacist license renewal', 'Approval required by an insurer before certain medications are covered', 'A patient copay receipt', 'A controlled substance log'],
-          correctAnswer: 'Approval required by an insurer before certain medications are covered',
-          explanation: 'Prior authorization is used by insurers to verify medical necessity before coverage.'
-        }
-      ]
-    },
-    {
-      category: 'Pharmacy Inventory',
-      questions: [
-        {
-          text: 'What inventory method helps reduce medication expiration waste?',
-          choices: ['LIFO', 'FEFO', 'JIT only', 'Random shelving'],
-          correctAnswer: 'FEFO',
-          explanation: 'FEFO (First Expired, First Out) helps ensure products with earliest expiration are used first.'
-        }
-      ]
-    }
-  ],
-  mathTopics: [
-    {
-      section: 'Basic Conversions',
-      explanation: 'Pharmacy technicians convert between units all day, such as grams to milligrams and milliliters to liters.',
-      method: 'Use conversion facts and multiply/divide once: 1 g = 1000 mg, 1 L = 1000 mL.',
-      exampleProblem: 'Convert 1.5 g to mg.',
-      steps: [
-        'Start with what you have: 1.5 g.',
-        'Use the fact 1 g = 1000 mg.',
-        'Multiply 1.5 × 1000.',
-        'Result: 1500 mg.'
-      ],
-      practiceProblem: 'Convert 0.25 L to mL.',
-      practiceAnswer: '250 mL'
-    },
-    {
-      section: 'Days Supply',
-      explanation: 'Days supply tells how long medication lasts based on directions and quantity dispensed.',
-      method: 'Days supply = Quantity dispensed ÷ Quantity used per day.',
-      exampleProblem: 'Rx: Take 1 tablet BID. Quantity = 60 tablets. Find days supply.',
-      steps: [
-        'BID means 2 tablets per day.',
-        'Quantity dispensed is 60 tablets.',
-        'Compute 60 ÷ 2.',
-        'Result: 30 days supply.'
-      ],
-      practiceProblem: 'Take 2 tablets daily, quantity 90 tablets. What is days supply?',
-      practiceAnswer: '45 days'
-    },
-    {
-      section: 'Dosage Calculations',
-      explanation: 'Use dosage calculations to find how much medication to give when stock strength is different from ordered dose.',
-      method: 'Formula: (Desired dose ÷ Have dose) × Quantity = Amount to give.',
-      exampleProblem: 'Order: 250 mg. Have: 125 mg per tablet. How many tablets?',
-      steps: [
-        'Desired dose = 250 mg.',
-        'Have dose = 125 mg per 1 tablet.',
-        'Compute 250 ÷ 125 = 2.',
-        'Result: Give 2 tablets.'
-      ],
-      practiceProblem: 'Order 500 mg, have 250 mg per tablet. How many tablets?',
-      practiceAnswer: '2 tablets'
-    },
-    {
-      section: 'IV Flow Rates',
-      explanation: 'Flow rate helps set IV drips safely using volume, time, and drop factor.',
-      method: 'gtt/min = (mL × drop factor gtt/mL) ÷ minutes.',
-      exampleProblem: 'Infuse 500 mL over 4 hours, drop factor 15 gtt/mL. Find gtt/min.',
-      steps: [
-        'Convert time: 4 hours = 240 minutes.',
-        'Multiply volume by drop factor: 500 × 15 = 7500.',
-        'Divide by minutes: 7500 ÷ 240 = 31.25.',
-        'Round to whole drops: 31 gtt/min.'
-      ],
-      practiceProblem: 'Infuse 250 mL over 2 hours, drop factor 20 gtt/mL. Find gtt/min.',
-      practiceAnswer: '42 gtt/min (rounded from 41.7)'
-    },
-    {
-      section: 'Alligation',
-      explanation: 'Alligation is used to mix two strengths to make a new target strength.',
-      method: 'Set high and low strengths around desired strength; subtract diagonally to find parts of each.',
-      exampleProblem: 'Mix 10% and 2% to make 6%. Find ratio of 10% : 2%.',
-      steps: [
-        'Place 10% (high) and 2% (low) around desired 6%.',
-        '10 - 6 = 4 parts from low strength (2%).',
-        '6 - 2 = 4 parts from high strength (10%).',
-        'Ratio is 4:4, which simplifies to 1:1.'
-      ],
-      practiceProblem: 'Mix 20% and 5% to make 10%. What is ratio 20% : 5%?',
-      practiceAnswer: '1 : 2'
-    },
-    {
-      section: 'Concentrations and Percentages',
-      explanation: 'Percent strength tells how much drug is in a certain amount of solution.',
-      method: 'For w/v: X% means X grams per 100 mL.',
-      exampleProblem: 'What does 5% w/v mean?',
-      steps: [
-        'w/v means grams in 100 mL.',
-        '5% means 5 per 100.',
-        'So 5% w/v = 5 g in 100 mL.',
-        'Use this setup to scale up or down.'
-      ],
-      practiceProblem: 'How many grams are in 200 mL of a 2% w/v solution?',
-      practiceAnswer: '4 g'
-    },
-    {
-      section: 'Insulin Calculations',
-      explanation: 'Insulin doses are measured in units, and syringes are marked to match insulin concentration.',
-      method: 'Volume (mL) = Ordered units ÷ Concentration (units/mL).',
-      exampleProblem: 'Order: 20 units insulin U-100. What volume in mL?',
-      steps: [
-        'U-100 means 100 units per 1 mL.',
-        'Use formula: 20 ÷ 100 = 0.2.',
-        'Result: 0.2 mL.',
-        'Use the proper insulin syringe markings for safety.'
-      ],
-      practiceProblem: 'Order 35 units of U-100 insulin. What volume?',
-      practiceAnswer: '0.35 mL'
-    },
-    {
-      section: 'Ratio and Proportion',
-      explanation: 'Ratio and proportion solves unknown doses by matching equal fractions.',
-      method: 'Set up: Have/Quantity = Desired/x, then solve for x.',
-      exampleProblem: 'Have 250 mg in 5 mL. Need 125 mg. How many mL?',
-      steps: [
-        'Write proportion: 250/5 = 125/x.',
-        'Cross multiply: 250x = 625.',
-        'Solve: x = 625 ÷ 250.',
-        'Result: 2.5 mL.'
-      ],
-      practiceProblem: 'Have 100 mg in 2 mL. Need 150 mg. How many mL?',
-      practiceAnswer: '3 mL'
-    }
-  ],
-  flashcards: [
-    { drug: 'Atorvastatin', use: 'Lowers cholesterol', class: 'Statin' },
-    { drug: 'Lisinopril', use: 'Treats hypertension', class: 'ACE inhibitor' },
-    { drug: 'Metformin', use: 'Type 2 diabetes', class: 'Biguanide' }
-  ],
-  guides: [
-    { title: 'PTCB Exam Blueprint Overview', format: 'PDF', level: 'Core' },
-    { title: 'Pharmacy Abbreviations Quick Sheet', format: 'PDF', level: 'Fast Review' },
-    { title: 'Controlled Substances Schedules I-V', format: 'PDF', level: 'Compliance' }
-  ],
-  tutoring: [
-    { label: 'Book 1:1 Tutoring Session', link: '#' },
-    { label: 'Request Group Coaching', link: '#' },
-    { label: 'Contact Admissions Team', link: '#' }
-  ]
+  dailyQuestion,
+  quizzes: quizCategories,
+  mathTopics,
+  flashcards,
+  guides: studyGuides,
+  tutoring: tutoringLinks
 };
 
 const nav = [
@@ -258,6 +25,17 @@ const nav = [
   'Tutor Support',
   'Progress Tracker'
 ];
+
+const pageDescriptions = {
+  Dashboard: 'Your daily overview for certification prep progress and next steps.',
+  'Daily Study Question': 'Complete one focused question each day to build consistency.',
+  'Practice Quiz Center': 'Train by category and get immediate feedback to strengthen retention.',
+  'Pharmacy Math Help Center': 'Beginner-friendly pharmacy math walkthroughs and self-check practice.',
+  'Top 200 Drugs Flashcards': 'Flip, review, and track high-yield medications by category.',
+  'Study Guides Library': 'Open structured in-app guides for key PTCE study topics.',
+  'Tutor Support': 'Connect with Barrett Academy support for focused study help.',
+  'Progress Tracker': 'Monitor weekly study progress and momentum.'
+};
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -316,6 +94,7 @@ export default function App() {
         </nav>
 
         <section className="content">
+          <PageHeader title={active} description={pageDescriptions[active]} />
           {active === 'Dashboard' && <Dashboard progress={progress} setActive={setActive} />}
           {active === 'Daily Study Question' && (
             <DailyQuestion
@@ -337,8 +116,17 @@ export default function App() {
   );
 }
 
+function PageHeader({ title, description }) {
+  return (
+    <section className="page-header">
+      <h2>{title}</h2>
+      <p className="muted">{description}</p>
+    </section>
+  );
+}
+
 function Card({ title, children }) {
-  return <article className="card"><h2>{title}</h2>{children}</article>;
+  return <article className="card"><h3>{title}</h3>{children}</article>;
 }
 
 function StatTile({ label, value }) {
@@ -533,44 +321,30 @@ function QuizCenter() {
   );
 }
 
-function MathCenter() {
-  const [revealed, setRevealed] = useState({});
+function MathCenter() { return <Card title="Pharmacy Math Help Center"><p className="muted">Beginner-friendly math walkthroughs for pharmacy technician exam prep.</p><div className="list">{content.mathTopics.map((topic) => <article className="mini" key={topic.section}><h3>{topic.section}</h3><p><strong>What this means:</strong> {topic.explanation}</p><p><strong>Formula / Method:</strong> {topic.method}</p><p><strong>Example:</strong> {topic.exampleProblem}</p><ol className="steps">{topic.steps.map((step) => <li key={step}>{step}</li>)}</ol><p><strong>Practice:</strong> {topic.practiceProblem}</p></article>)}</div></Card>; }
 
-  const toggleReveal = (section) => {
-    setRevealed((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
+function Flashcards() { return <Card title="Top 200 Drugs Flashcards"><p className="muted">Use sample flashcards below. Add more in src/data/content.js.</p><div className="grid">{content.flashcards.map((c) => <div className="mini" key={`${c.brandName}-${c.genericName}`}><h3>{c.brandName}</h3><p><strong>Generic:</strong> {c.genericName}</p><p><strong>Class:</strong> {c.drugClass}</p><p><strong>Use:</strong> {c.commonUse}</p><p className="muted"><strong>Memory tip:</strong> {c.memoryTip}</p></div>)}</div></Card>; }
 
+function Guides() { return <Card title="Study Guides Library"><div className="grid two">{content.guides.map((guide) => <article key={guide.id} className="mini"><h3>{guide.title}</h3><p>{guide.description}</p><p className="muted"><strong>Estimated study time:</strong> {guide.studyTime}</p><button className="btn btn-primary">Open Guide</button></article>)}</div></Card>; }
+
+function TutorSupport() {
   return (
-    <Card title="Pharmacy Math Help Center">
-      <p className="muted">Beginner-friendly math walkthroughs for pharmacy technician exam prep.</p>
-      <div className="list">
-        {content.mathTopics.map((topic) => (
-          <article className="mini" key={topic.section}>
-            <h3>{topic.section}</h3>
-            <p><strong>What this means:</strong> {topic.explanation}</p>
-            <p><strong>Formula / Method:</strong> {topic.method}</p>
-            <p><strong>Example:</strong> {topic.exampleProblem}</p>
-            <div>
-              <p><strong>Step-by-step:</strong></p>
-              <ol className="steps">
-                {topic.steps.map((step) => (
-                  <li key={step}>{step}</li>
-                ))}
-              </ol>
-            </div>
-            <p><strong>Practice:</strong> {topic.practiceProblem}</p>
-            <button className="btn btn-primary" onClick={() => toggleReveal(topic.section)}>
-              {revealed[topic.section] ? 'Hide Answer' : 'Reveal Answer'}
-            </button>
-            {revealed[topic.section] && <p className="result">Answer: {topic.practiceAnswer}</p>}
-          </article>
+    <Card title="Tutor Support">
+      <section className="support-hero">
+        <h3>Your success team is here for you.</h3>
+        <p>Barrett Pharmacy Technician Certification Academy LLC offers personalized support to help you study with confidence and consistency.</p>
+      </section>
+      <div className="mini">
+        <p>Book one-on-one help for pharmacy math, PTCE preparation, study planning, and difficult topics you want to review step by step.</p>
+      </div>
+      <div className="row-actions">
+        {content.tutoring.map((link) => (
+          <a key={link.label} className="btn btn-primary" href={link.link} target="_blank" rel="noreferrer">{link.label}</a>
         ))}
       </div>
+      <p className="muted">Support is educational and coaching-focused. Outcomes vary by learner effort and preparation.</p>
     </Card>
   );
 }
 
-function Flashcards() { return <Card title="Top 200 Drugs Flashcards"><div className="grid">{content.flashcards.map((f) => <div className="mini" key={f.drug}><h3>{f.drug}</h3><p><strong>Class:</strong> {f.class}</p><p><strong>Use:</strong> {f.use}</p></div>)}</div></Card>; }
-function Guides() { return <Card title="Study Guides Library"><div className="list">{content.guides.map((g) => <div key={g.title} className="row"><div><h3>{g.title}</h3><p>{g.level} • {g.format}</p></div><button className="btn">Open</button></div>)}</div></Card>; }
-function TutorSupport() { return <Card title="Tutor Support"><p>Book support with Barrett Pharmacy Technician Certification Academy.</p><div className="list">{content.tutoring.map((t) => <a key={t.label} className="btn btn-primary" href={t.link}>{t.label}</a>)}</div></Card>; }
 function ProgressTracker({ progress }) { return <Card title="Progress Tracker"><p>Weekly goal: {progress.weeklyGoal} study tasks</p><progress max={progress.weeklyGoal} value={progress.completedToday} /><p>{progress.completedToday} completed this week</p></Card>; }
