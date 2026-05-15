@@ -59,8 +59,13 @@ export default function App() {
   const progress = useMemo(() => ({
     weeklyGoal: 5,
     completedToday: 2,
+    studyStreak: 4,
+    examReadiness: 78,
     quizAverage: 84,
-    flashcardsReviewed: 28
+    flashcardsReviewed: 28,
+    completedQuestions: 36,
+    mathPractice: 14,
+    guidesOpened: 6
   }), []);
 
   if (!loggedIn) {
@@ -102,7 +107,7 @@ export default function App() {
         </nav>
 
         <section className="content">
-          {active === 'Dashboard' && <Dashboard progress={progress} />}
+          {active === 'Dashboard' && <Dashboard progress={progress} setActive={setActive} />}
           {active === 'Daily Study Question' && (
             <DailyQuestion
               selectedAnswer={selectedAnswer}
@@ -127,8 +132,66 @@ function Card({ title, children }) {
   return <article className="card"><h2>{title}</h2>{children}</article>;
 }
 
-function Dashboard({ progress }) {
-  return <div className="grid two"><Card title="Today at a glance"><p>Daily question complete: <strong>No</strong></p><p>Quizzes ready: <strong>{content.quizzes.length}</strong></p><p>Flashcards due: <strong>12</strong></p></Card><Card title="Current performance"><p>Quiz average: <strong>{progress.quizAverage}%</strong></p><p>Flashcards reviewed: <strong>{progress.flashcardsReviewed}</strong></p><p>Study streak: <strong>4 days</strong></p></Card></div>;
+function StatTile({ label, value }) {
+  return <div className="mini"><p className="muted">{label}</p><h3>{value}</h3></div>;
+}
+
+function Dashboard({ progress, setActive }) {
+  const quickLinks = [
+    { label: 'Daily Question', page: 'Daily Study Question' },
+    { label: 'Practice Quizzes', page: 'Practice Quiz Center' },
+    { label: 'Pharmacy Math', page: 'Pharmacy Math Help Center' },
+    { label: 'Flashcards', page: 'Top 200 Drugs Flashcards' },
+    { label: 'Study Guides', page: 'Study Guides Library' },
+    { label: 'Book Tutoring', page: 'Tutor Support' }
+  ];
+
+  return (
+    <div className="stack">
+      <Card title="Welcome">
+        <p>Welcome to your premium study workspace. Stay consistent, track your progress, and move confidently toward certification.</p>
+      </Card>
+
+      <div className="grid two">
+        <Card title="Study Streak">
+          <p className="metric">{progress.studyStreak} days</p>
+          <p className="muted">Keep your streak alive by completing at least one study activity today.</p>
+        </Card>
+        <Card title="Exam Readiness Score">
+          <p className="metric">{progress.examReadiness}%</p>
+          <p className="muted">Placeholder score based on recent quiz and study activity trends.</p>
+        </Card>
+      </div>
+
+      <Card title="Quick Actions">
+        <div className="grid">
+          {quickLinks.map((link) => (
+            <button key={link.label} className="btn quick-btn" onClick={() => setActive(link.page)}>{link.label}</button>
+          ))}
+        </div>
+      </Card>
+
+      <div className="grid two">
+        <Card title="Recommended Next Step">
+          <p>Complete today’s Daily Study Question, then take the Beginner Federal Law quiz to reinforce exam fundamentals.</p>
+          <button className="btn btn-primary" onClick={() => setActive('Daily Study Question')}>Start Recommended Step</button>
+        </Card>
+        <Card title="Today’s Focus">
+          <p><strong>Topic:</strong> Medication Safety & High-Alert Medications</p>
+          <p className="muted">Spend 20 minutes: 1 quiz set + 5 flashcards + 2 math conversion drills.</p>
+        </Card>
+      </div>
+
+      <Card title="Progress Summary">
+        <div className="grid two">
+          <StatTile label="Completed Questions" value={progress.completedQuestions} />
+          <StatTile label="Math Practice" value={progress.mathPractice} />
+          <StatTile label="Flashcards Reviewed" value={progress.flashcardsReviewed} />
+          <StatTile label="Study Guides Opened" value={progress.guidesOpened} />
+        </div>
+      </Card>
+    </div>
+  );
 }
 
 function DailyQuestion({ selectedAnswer, setSelectedAnswer, showAnswer, setShowAnswer }) {
@@ -142,4 +205,3 @@ function Flashcards() { return <Card title="Top 200 Drugs Flashcards"><div class
 function Guides() { return <Card title="Study Guides Library"><div className="list">{content.guides.map((g) => <div key={g.title} className="row"><div><h3>{g.title}</h3><p>{g.level} • {g.format}</p></div><button className="btn">Open</button></div>)}</div></Card>; }
 function TutorSupport() { return <Card title="Tutor Support"><p>Book support with Barrett Pharmacy Technician Certification Academy.</p><div className="list">{content.tutoring.map((t) => <a key={t.label} className="btn btn-primary" href={t.link}>{t.label}</a>)}</div></Card>; }
 function ProgressTracker({ progress }) { return <Card title="Progress Tracker"><p>Weekly goal: {progress.weeklyGoal} study tasks</p><progress max={progress.weeklyGoal} value={progress.completedToday} /><p>{progress.completedToday} completed this week</p></Card>; }
-
