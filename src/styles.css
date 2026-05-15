@@ -18,7 +18,11 @@
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1rem}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem}.grid.two{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .mini{border:1px solid var(--line);border-radius:10px;padding:.8rem;background:#fbfdff}
+.option-card{cursor:pointer}
 .metric{font-size:1.7rem;font-weight:700;color:var(--navy);margin:.2rem 0}
+.feedback{margin-top:.8rem}
+.warn{color:#8a4c00}
+.row-actions{display:flex;gap:.6rem;flex-wrap:wrap}
 .list{display:flex;flex-direction:column;gap:.7rem}.row{display:flex;justify-content:space-between;align-items:center;gap:.7rem;border:1px solid var(--line);padding:.7rem;border-radius:10px}
 .option{display:block;margin:.45rem 0}.muted{color:#4d627e}.result{margin-top:.7rem;color:#1c6f55;font-weight:600}
 @media (max-width:900px){.layout{grid-template-columns:1fr}.sidebar{overflow:auto;white-space:nowrap;flex-direction:row}}
