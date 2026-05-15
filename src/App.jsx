@@ -117,10 +117,119 @@ const content = {
       ]
     }
   ],
-  mathProblems: [
-    { type: 'Conversions', prompt: 'Convert 2.5 g to mg', answer: '2500 mg' },
-    { type: 'Days Supply', prompt: 'Take 1 tablet BID for 30 tablets', answer: '15 days' },
-    { type: 'Concentration', prompt: '1:1000 means 1 g in ?', answer: '1000 mL' }
+  mathTopics: [
+    {
+      section: 'Basic Conversions',
+      explanation: 'Pharmacy technicians convert between units all day, such as grams to milligrams and milliliters to liters.',
+      method: 'Use conversion facts and multiply/divide once: 1 g = 1000 mg, 1 L = 1000 mL.',
+      exampleProblem: 'Convert 1.5 g to mg.',
+      steps: [
+        'Start with what you have: 1.5 g.',
+        'Use the fact 1 g = 1000 mg.',
+        'Multiply 1.5 × 1000.',
+        'Result: 1500 mg.'
+      ],
+      practiceProblem: 'Convert 0.25 L to mL.',
+      practiceAnswer: '250 mL'
+    },
+    {
+      section: 'Days Supply',
+      explanation: 'Days supply tells how long medication lasts based on directions and quantity dispensed.',
+      method: 'Days supply = Quantity dispensed ÷ Quantity used per day.',
+      exampleProblem: 'Rx: Take 1 tablet BID. Quantity = 60 tablets. Find days supply.',
+      steps: [
+        'BID means 2 tablets per day.',
+        'Quantity dispensed is 60 tablets.',
+        'Compute 60 ÷ 2.',
+        'Result: 30 days supply.'
+      ],
+      practiceProblem: 'Take 2 tablets daily, quantity 90 tablets. What is days supply?',
+      practiceAnswer: '45 days'
+    },
+    {
+      section: 'Dosage Calculations',
+      explanation: 'Use dosage calculations to find how much medication to give when stock strength is different from ordered dose.',
+      method: 'Formula: (Desired dose ÷ Have dose) × Quantity = Amount to give.',
+      exampleProblem: 'Order: 250 mg. Have: 125 mg per tablet. How many tablets?',
+      steps: [
+        'Desired dose = 250 mg.',
+        'Have dose = 125 mg per 1 tablet.',
+        'Compute 250 ÷ 125 = 2.',
+        'Result: Give 2 tablets.'
+      ],
+      practiceProblem: 'Order 500 mg, have 250 mg per tablet. How many tablets?',
+      practiceAnswer: '2 tablets'
+    },
+    {
+      section: 'IV Flow Rates',
+      explanation: 'Flow rate helps set IV drips safely using volume, time, and drop factor.',
+      method: 'gtt/min = (mL × drop factor gtt/mL) ÷ minutes.',
+      exampleProblem: 'Infuse 500 mL over 4 hours, drop factor 15 gtt/mL. Find gtt/min.',
+      steps: [
+        'Convert time: 4 hours = 240 minutes.',
+        'Multiply volume by drop factor: 500 × 15 = 7500.',
+        'Divide by minutes: 7500 ÷ 240 = 31.25.',
+        'Round to whole drops: 31 gtt/min.'
+      ],
+      practiceProblem: 'Infuse 250 mL over 2 hours, drop factor 20 gtt/mL. Find gtt/min.',
+      practiceAnswer: '42 gtt/min (rounded from 41.7)'
+    },
+    {
+      section: 'Alligation',
+      explanation: 'Alligation is used to mix two strengths to make a new target strength.',
+      method: 'Set high and low strengths around desired strength; subtract diagonally to find parts of each.',
+      exampleProblem: 'Mix 10% and 2% to make 6%. Find ratio of 10% : 2%.',
+      steps: [
+        'Place 10% (high) and 2% (low) around desired 6%.',
+        '10 - 6 = 4 parts from low strength (2%).',
+        '6 - 2 = 4 parts from high strength (10%).',
+        'Ratio is 4:4, which simplifies to 1:1.'
+      ],
+      practiceProblem: 'Mix 20% and 5% to make 10%. What is ratio 20% : 5%?',
+      practiceAnswer: '1 : 2'
+    },
+    {
+      section: 'Concentrations and Percentages',
+      explanation: 'Percent strength tells how much drug is in a certain amount of solution.',
+      method: 'For w/v: X% means X grams per 100 mL.',
+      exampleProblem: 'What does 5% w/v mean?',
+      steps: [
+        'w/v means grams in 100 mL.',
+        '5% means 5 per 100.',
+        'So 5% w/v = 5 g in 100 mL.',
+        'Use this setup to scale up or down.'
+      ],
+      practiceProblem: 'How many grams are in 200 mL of a 2% w/v solution?',
+      practiceAnswer: '4 g'
+    },
+    {
+      section: 'Insulin Calculations',
+      explanation: 'Insulin doses are measured in units, and syringes are marked to match insulin concentration.',
+      method: 'Volume (mL) = Ordered units ÷ Concentration (units/mL).',
+      exampleProblem: 'Order: 20 units insulin U-100. What volume in mL?',
+      steps: [
+        'U-100 means 100 units per 1 mL.',
+        'Use formula: 20 ÷ 100 = 0.2.',
+        'Result: 0.2 mL.',
+        'Use the proper insulin syringe markings for safety.'
+      ],
+      practiceProblem: 'Order 35 units of U-100 insulin. What volume?',
+      practiceAnswer: '0.35 mL'
+    },
+    {
+      section: 'Ratio and Proportion',
+      explanation: 'Ratio and proportion solves unknown doses by matching equal fractions.',
+      method: 'Set up: Have/Quantity = Desired/x, then solve for x.',
+      exampleProblem: 'Have 250 mg in 5 mL. Need 125 mg. How many mL?',
+      steps: [
+        'Write proportion: 250/5 = 125/x.',
+        'Cross multiply: 250x = 625.',
+        'Solve: x = 625 ÷ 250.',
+        'Result: 2.5 mL.'
+      ],
+      practiceProblem: 'Have 100 mg in 2 mL. Need 150 mg. How many mL?',
+      practiceAnswer: '3 mL'
+    }
   ],
   flashcards: [
     { drug: 'Atorvastatin', use: 'Lowers cholesterol', class: 'Statin' },
@@ -424,7 +533,43 @@ function QuizCenter() {
   );
 }
 
-function MathCenter() { return <Card title="Pharmacy Math Help Center"><div className="grid">{content.mathProblems.map((p) => <div className="mini" key={p.prompt}><h3>{p.type}</h3><p>{p.prompt}</p><p className="muted">Answer: {p.answer}</p></div>)}</div></Card>; }
+function MathCenter() {
+  const [revealed, setRevealed] = useState({});
+
+  const toggleReveal = (section) => {
+    setRevealed((prev) => ({ ...prev, [section]: !prev[section] }));
+  };
+
+  return (
+    <Card title="Pharmacy Math Help Center">
+      <p className="muted">Beginner-friendly math walkthroughs for pharmacy technician exam prep.</p>
+      <div className="list">
+        {content.mathTopics.map((topic) => (
+          <article className="mini" key={topic.section}>
+            <h3>{topic.section}</h3>
+            <p><strong>What this means:</strong> {topic.explanation}</p>
+            <p><strong>Formula / Method:</strong> {topic.method}</p>
+            <p><strong>Example:</strong> {topic.exampleProblem}</p>
+            <div>
+              <p><strong>Step-by-step:</strong></p>
+              <ol className="steps">
+                {topic.steps.map((step) => (
+                  <li key={step}>{step}</li>
+                ))}
+              </ol>
+            </div>
+            <p><strong>Practice:</strong> {topic.practiceProblem}</p>
+            <button className="btn btn-primary" onClick={() => toggleReveal(topic.section)}>
+              {revealed[topic.section] ? 'Hide Answer' : 'Reveal Answer'}
+            </button>
+            {revealed[topic.section] && <p className="result">Answer: {topic.practiceAnswer}</p>}
+          </article>
+        ))}
+      </div>
+    </Card>
+  );
+}
+
 function Flashcards() { return <Card title="Top 200 Drugs Flashcards"><div className="grid">{content.flashcards.map((f) => <div className="mini" key={f.drug}><h3>{f.drug}</h3><p><strong>Class:</strong> {f.class}</p><p><strong>Use:</strong> {f.use}</p></div>)}</div></Card>; }
 function Guides() { return <Card title="Study Guides Library"><div className="list">{content.guides.map((g) => <div key={g.title} className="row"><div><h3>{g.title}</h3><p>{g.level} • {g.format}</p></div><button className="btn">Open</button></div>)}</div></Card>; }
 function TutorSupport() { return <Card title="Tutor Support"><p>Book support with Barrett Pharmacy Technician Certification Academy.</p><div className="list">{content.tutoring.map((t) => <a key={t.label} className="btn btn-primary" href={t.link}>{t.label}</a>)}</div></Card>; }
